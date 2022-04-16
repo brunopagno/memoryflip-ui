@@ -19,7 +19,7 @@ export function Home() {
   return (
     <>
       <div className="h-48 bg-indigo-100 p-4 text-center rounded-lg shadow-md">
-        <h1 className="text-5xl font-bold">Flipcards</h1>
+        <h1 className="text-5xl font-bold">Memory Flip</h1>
         <p className="my-2 text-lg">A simple way of memorising new words.</p>
         <Link to="/register" className="btn btn-primary btn-lg">
           Register
