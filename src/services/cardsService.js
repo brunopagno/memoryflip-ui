@@ -1,7 +1,9 @@
 import { getRequest, postRequest, deleteRequest } from "./baseService";
 
-export async function getCards(querystring) {
-  const response = await getRequest(`/cards?${querystring}`);
+export async function getCards(querystring = "") {
+  querystring = querystring ? `?${querystring}` : "";
+
+  const response = await getRequest(`/cards${querystring}`);
   if (response.ok) {
     return await response.json();
   }

@@ -52,7 +52,7 @@ export function Nav({ className }) {
               </li>
               <li>
                 <NavItem>
-                  <Link to="/register">Register</Link>
+                  <Link to="/register">Sign up</Link>
                 </NavItem>
               </li>
             </>

@@ -1,12 +1,6 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+import { SESSION_TOKEN_KEY, currentToken } from "./tokenService";
 
-const FETCH_PARAMS = {
-  mode: "cors",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export async function getRequest(url) {
   const targetUrl = `${BASE_URL}${url}`;
@@ -14,7 +8,7 @@ export async function getRequest(url) {
 
   return await fetch(targetUrl, {
     method,
-    ...FETCH_PARAMS,
+    ...fetchParams(),
   });
 }
 
@@ -24,7 +18,7 @@ export async function postRequest(url, data) {
 
   return await fetch(targetUrl, {
     method,
-    ...FETCH_PARAMS,
+    ...fetchParams(),
     body: JSON.stringify(data),
   });
 }
@@ -35,6 +29,25 @@ export async function deleteRequest(url) {
 
   return await fetch(targetUrl, {
     method,
-    ...FETCH_PARAMS,
+    ...fetchParams(),
   });
+}
+
+// private
+
+function fetchParams() {
+  const params = {
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const token = currentToken();
+  if (token) {
+    params.headers[SESSION_TOKEN_KEY] = token;
+  }
+
+  return params;
 }

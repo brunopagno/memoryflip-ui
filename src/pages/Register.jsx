@@ -20,7 +20,7 @@ export function Register() {
 
   return (
     <>
-      <h2>Register</h2>
+      <h2>Sign up</h2>
       <form className="max-w-xl" onSubmit={handleSubmit}>
         {error && <p className="text-red-500">{error}</p>}
         <label>
@@ -40,7 +40,7 @@ export function Register() {
           />
         </label>
         <button className="btn btn-primary" type="submit">
-          Register
+          Sign up
         </button>
       </form>
     </>

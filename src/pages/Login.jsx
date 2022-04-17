@@ -36,7 +36,7 @@ export function Login() {
         </button>
       </form>
 
-      Or click <Link className="link" to="/register">here</Link> to register
+      Or click <Link className="link" to="/register">here</Link> to sign up
     </>
   );
 }

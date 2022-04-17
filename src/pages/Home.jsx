@@ -22,7 +22,7 @@ export function Home() {
         <h1 className="text-5xl font-bold">Memory Flip</h1>
         <p className="my-2 text-lg">A simple way of memorising new words.</p>
         <Link to="/register" className="btn btn-primary btn-lg">
-          Register
+          Sign up
         </Link>
       </div>
       <div className="flex mt-8">
@@ -36,7 +36,7 @@ export function Home() {
       <div>
         <p>
           Made with <span className="text-indigo-500">❤</span> by{" "}
-          <a className="link" target="_blank" href="https://brunopagno.github.io">Bruno Pagno</a>.
+          <a className="link" target="_blank" rel="noreferrer" href="https://brunopagno.github.io">Bruno Pagno</a>.
         </p>
       </div>
     </>

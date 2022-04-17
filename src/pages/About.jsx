@@ -15,12 +15,12 @@ export function About() {
       <Paragraph>
         As a developer I feel the obligation of making things more challenging
         than they need to be so I decided to create a project for anyone to
-        register and create their own flashcards
+        sign up and create their own flashcards
       </Paragraph>
       <Paragraph>
         I hope you enjoy this project and if you have any suggestions or
         feedback please reach out to me at{" "}
-        <a className="link" target="_blank" href="https://brunopagno.github.io">
+        <a className="link" target="_blank" rel="noreferrer" href="https://brunopagno.github.io">
           Bruno Pagno
         </a>
         .
