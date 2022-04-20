@@ -1,108 +1,77 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getCards, addCard, removeCard } from "../services/cardsService";
+import {
+  getCollections,
+  addCollection,
+  removeCollection,
+  updateCollection,
+} from "../services/collectionsService";
+import { Collection } from "../components/Collection";
 
 export function Cards() {
-  const [cards, setCards] = useState([]);
+  const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  function fetchCards() {
-    getCards().then((res) => {
-      setCards(res);
+  function fetchCollections() {
+    getCollections().then((res) => {
+      setCollections(res);
       setIsLoading(false);
     });
   }
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetchCards();
-  }, []);
-
   function handleAdd(ev) {
     ev.preventDefault();
-    const form = ev.target;
-    const card = {
-      front: form.front.value,
-      back: form.back.value,
-    };
     setIsLoading(true);
-    addCard(card).then(() => {
-      fetchCards();
-      form.reset();
-    });
+    addCollection().then(() => fetchCollections());
   }
 
   function handleRemove(id) {
     return function (ev) {
       ev.preventDefault();
       setIsLoading(true);
-      removeCard(id).then(() => fetchCards());
+      removeCollection(id).then(() => fetchCollections());
     };
   }
+
+  function handleUpdate(id, name) {
+    setIsLoading(true);
+    updateCollection(id, { name }).then(() => fetchCollections());
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchCollections();
+  }, []);
 
   return (
     <>
       <div className="mb-4">
-        <h2>Cards</h2>
-        <Link className="btn btn-primary" to="/play">
-          Play
-        </Link>
+        <h2>Collections</h2>
       </div>
 
-      <h3>Add card</h3>
-      <div>
-        <form className="max-w-xl" onSubmit={handleAdd}>
-          <label>
-            Front:
-            <input
-              className="form-field"
-              name="front"
-              type="text"
+      {collections.length === 0 ? (
+        <>... loading</>
+      ) : (
+        <>
+          <form onSubmit={handleAdd}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={isLoading}
+            >
+              New collection
+            </button>
+          </form>
+          {collections.map((collection) => (
+            <Collection
+              key={collection.id}
+              collection={collection}
+              onUpdate={handleUpdate}
+              onRemove={handleRemove(collection.id)}
               disabled={isLoading}
             />
-          </label>
-          <label>
-            Back:
-            <input
-              className="form-field"
-              name="back"
-              type="text"
-              disabled={isLoading}
-            />
-          </label>
-          <button
-            className="btn btn-secondary"
-            type="submit"
-            disabled={isLoading}
-          >
-            Add
-          </button>
-        </form>
-      </div>
-
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-                   p-4 mt-6 mb-10 rounded bg-gray-200 shadow-md"
-      >
-        {cards.length === 0 ? (
-          <>... loading</>
-        ) : (
-          cards.map((card) => (
-            <div className="" key={card.id}>
-              <span>{card.front}</span> - <span>{card.back}</span>
-              <form className="inline mx-2" onSubmit={handleRemove(card.id)}>
-                <button
-                  className="btn btn-secondary btn-tiny text-sm"
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  ×
-                </button>
-              </form>
-            </div>
-          ))
-        )}
-      </div>
+          ))}
+        </>
+      )}
     </>
   );
 }

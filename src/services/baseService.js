@@ -23,6 +23,17 @@ export async function postRequest(url, data) {
   });
 }
 
+export async function patchRequest(url, data) {
+  const targetUrl = `${BASE_URL}${url}`;
+  const method = "PATCH";
+
+  return await fetch(targetUrl, {
+    method,
+    ...fetchParams(),
+    body: JSON.stringify(data),
+  });
+}
+
 export async function deleteRequest(url) {
   const targetUrl = `${BASE_URL}${url}`;
   const method = "DELETE";
