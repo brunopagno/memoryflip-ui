@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { PlayCard } from "../components/PlayCard";
 import { getCards } from "../services/cardsService";
 
 export function Play() {
+  const urlParams = useParams();
   const [cards, setCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getCards("sort=random").then((res) => {
+    getCards(urlParams.id, "sort=random").then((res) => {
       setCurrentIndex(0);
       setCards(res);
       setIsLoading(false);
     });
-  }, []);
+  }, [urlParams.id]);
 
   function handleNext() {
     setCurrentIndex((currentIndex + 1) % cards.length);

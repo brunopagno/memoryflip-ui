@@ -52,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="/play"
+            path="/play/:id"
             element={
               <WithLogin>
                 <Play />
