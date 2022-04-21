@@ -34,5 +34,7 @@ export async function removeCollection(id) {
   if (response.ok) {
     return;
   }
-  throw new Error("Failed remove collection");
+
+  const error = await response.json();
+  throw new Error(error.error);
 }

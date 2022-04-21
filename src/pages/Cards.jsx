@@ -10,6 +10,7 @@ import { Collection } from "../components/Collection";
 export function Cards() {
   const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   function fetchCollections() {
     getCollections().then((res) => {
@@ -28,7 +29,12 @@ export function Cards() {
     return function (ev) {
       ev.preventDefault();
       setIsLoading(true);
-      removeCollection(id).then(() => fetchCollections());
+      removeCollection(id)
+        .then(() => fetchCollections())
+        .catch((err) => {
+          setError(`Could not remove collection: ${err.message}`);
+          setIsLoading(false);
+        });
     };
   }
 
@@ -44,14 +50,13 @@ export function Cards() {
 
   return (
     <>
-      <div className="mb-4">
-        <h2>Collections</h2>
-      </div>
-
       {collections.length === 0 ? (
         <>... loading</>
       ) : (
         <>
+          {error && (
+            <div className="p-2 border-2 border-red-200 rounded">{error}</div>
+          )}
           <form onSubmit={handleAdd}>
             <button
               className="btn btn-primary"

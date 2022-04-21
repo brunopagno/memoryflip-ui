@@ -61,8 +61,9 @@ export function Collection({ collection, onUpdate, onRemove, disabled }) {
     >
       <div>
         {isExpanded ? (
-          <form className="inline mx-2" onSubmit={handleCollectionNameSubmit}>
+          <form className="inline" onSubmit={handleCollectionNameSubmit}>
             <input
+              className="m-0 p-0 border-0"
               type="text"
               value={collectionName}
               onChange={handleCollectionNameChange}
@@ -74,7 +75,11 @@ export function Collection({ collection, onUpdate, onRemove, disabled }) {
         )}
 
         <form className="inline mx-2" onSubmit={onRemove}>
-          <button className="btn btn-secondary btn-tiny" type="submit" disabled={disabled}>
+          <button
+            className="btn btn-secondary btn-tiny"
+            type="submit"
+            disabled={disabled}
+          >
             ×
           </button>
         </form>
@@ -85,13 +90,12 @@ export function Collection({ collection, onUpdate, onRemove, disabled }) {
           Play
         </Link>
 
-        <a
-          className="text-right link"
-          href="#"
+        <span
+          className="link cursor-pointer self-center text-sm"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          expand
-        </a>
+          {isExpanded ? "collapse" : "expand"}
+        </span>
       </div>
 
       {isExpanded && (
