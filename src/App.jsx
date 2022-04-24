@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import { Home, About, Login, Register, Cards, Play } from "./pages";
+import { Home, About, Login, Register, Me, Play } from "./pages";
 import { useAuth } from "./hooks/auth";
 import { Nav } from "./Nav";
 
@@ -47,18 +47,11 @@ function App() {
             path="/me"
             element={
               <WithLogin>
-                <Cards />
+                <Me />
               </WithLogin>
             }
           />
-          <Route
-            path="/play/:id"
-            element={
-              <WithLogin>
-                <Play />
-              </WithLogin>
-            }
-          />
+          <Route path="/play/:id" element={<Play />} />
         </Routes>
       </main>
     </div>

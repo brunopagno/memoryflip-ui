@@ -9,7 +9,9 @@ export async function getCards(collectionId, querystring = "") {
   if (response.ok) {
     return await response.json();
   }
-  throw new Error("Failed get cards");
+
+  const error = await response.json();
+  throw new Error(error.error);
 }
 
 export async function addCard(card) {

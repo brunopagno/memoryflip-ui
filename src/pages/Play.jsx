@@ -8,13 +8,19 @@ export function Play() {
   const [cards, setCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getCards(urlParams.id, "sort=random").then((res) => {
-      setCurrentIndex(0);
-      setCards(res);
-      setIsLoading(false);
-    });
+    getCards(urlParams.id, "sort=random")
+      .then((res) => {
+        setCurrentIndex(0);
+        setCards(res);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
+      });
   }, [urlParams.id]);
 
   function handleNext() {
@@ -29,11 +35,24 @@ export function Play() {
       {isLoading ? (
         <>... loading</>
       ) : (
-        <PlayCard
-          front={cards[currentIndex].front}
-          back={cards[currentIndex].back}
-          next={handleNext}
-        />
+        <>
+          {error ? (
+            <div className="viewport flex justify-center">
+              <div
+                className="self-center mb-4 font-virgil bg-inherit border-b-2 border-red-100 text-red-900
+                           w-full text-center focus:outline-none"
+              >
+                {error}
+              </div>
+            </div>
+          ) : (
+            <PlayCard
+              front={cards[currentIndex].front}
+              back={cards[currentIndex].back}
+              next={handleNext}
+            />
+          )}
+        </>
       )}
       <div className="text-xs">
         Font used in this page:{" "}

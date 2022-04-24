@@ -7,7 +7,7 @@ import {
 } from "../services/collectionsService";
 import { Collection } from "../components/Collection";
 
-export function Cards() {
+export function Me() {
   const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,9 +38,9 @@ export function Cards() {
     };
   }
 
-  function handleUpdate(id, name) {
+  function handleUpdate(id, collection) {
     setIsLoading(true);
-    updateCollection(id, { name }).then(() => fetchCollections());
+    updateCollection(id, collection).then(() => fetchCollections());
   }
 
   useEffect(() => {

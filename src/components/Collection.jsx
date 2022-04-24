@@ -44,7 +44,12 @@ export function Collection({ collection, onUpdate, onRemove, disabled }) {
 
   function handleCollectionNameSubmit(ev) {
     ev.preventDefault();
-    onUpdate(collection.id, collectionName);
+    onUpdate(collection.id, { name: collectionName });
+  }
+
+  function handleCollectionPrivacy(ev) {
+    ev.preventDefault();
+    onUpdate(collection.id, { public: !collection.public });
   }
 
   useEffect(() => {
@@ -59,30 +64,47 @@ export function Collection({ collection, onUpdate, onRemove, disabled }) {
       className="my-2 p-4 rounded bg-gray-200 shadow-md 
                   border-indigo-100 border-t-2 border-b-2 border-l-2 border-r-2"
     >
-      <div>
-        {isExpanded ? (
-          <form className="inline" onSubmit={handleCollectionNameSubmit}>
-            <input
-              className="m-0 p-0 border-0"
-              type="text"
-              value={collectionName}
-              onChange={handleCollectionNameChange}
-            />
-            <button className="btn btn-tiny">Save</button>
-          </form>
-        ) : (
-          <span>{collectionName}</span>
-        )}
+      <div className="flex justify-between">
+        <div>
+          {isExpanded ? (
+            <form className="inline" onSubmit={handleCollectionNameSubmit}>
+              <input
+                className="m-0 p-0 border-0"
+                type="text"
+                value={collectionName}
+                onChange={handleCollectionNameChange}
+              />
+              <button className="btn btn-tiny">Save</button>
+            </form>
+          ) : (
+            <span>{collectionName}</span>
+          )}
 
-        <form className="inline mx-2" onSubmit={onRemove}>
-          <button
-            className="btn btn-secondary btn-tiny"
-            type="submit"
-            disabled={disabled}
-          >
-            ×
-          </button>
-        </form>
+          <form className="inline mx-2" onSubmit={onRemove}>
+            <button
+              className="btn btn-secondary btn-tiny"
+              type="submit"
+              disabled={disabled}
+            >
+              ×
+            </button>
+          </form>
+        </div>
+        <div className="flex items-center">
+          <span className="mx-2 text-xs text-gray-500">
+            This collection is currently{" "}
+            {collection.public ? "public" : "private"}
+          </span>
+          <form onSubmit={handleCollectionPrivacy}>
+            <button
+              className="btn btn-secondary btn-tiny"
+              type="submit"
+              disabled={disabled}
+            >
+              {collection.public ? "make private" : "make public"}
+            </button>
+          </form>
+        </div>
       </div>
 
       <div className="flex flex-wrap justify-between">
