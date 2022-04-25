@@ -17,8 +17,8 @@ export function Play() {
         setCards(res);
         setIsLoading(false);
       })
-      .catch((err) => {
-        setError(err.message);
+      .catch((_err) => {
+        setError("Cannot load cards");
         setIsLoading(false);
       });
   }, [urlParams.id]);
